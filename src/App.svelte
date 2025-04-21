@@ -2,7 +2,7 @@
     import {World} from '../pkg';
 
     const world = World.new();
-    console.log(world.width);
+    console.log(world.width());
 </script>
 
 <main>
