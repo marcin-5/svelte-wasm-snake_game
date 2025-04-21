@@ -6,11 +6,13 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern "C" {
-    fn alert(s: &str);
+struct World {
+    pub width: usize,
 }
 
 #[wasm_bindgen]
-pub fn greet(name: &str) -> String {
-    format!("Hello from Rust, {}!", name)
+impl World {
+    pub fn new(width: usize) -> World {
+        World { width: 8 }
+    }
 }
