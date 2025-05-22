@@ -5,4 +5,7 @@ import wasm from 'vite-plugin-wasm';
 
 export default defineConfig({
   plugins: [svelte(), wasm(), topLevelAwait()],
+  css: {
+    postcss: './postcss.config.cjs',
+  },
 });
