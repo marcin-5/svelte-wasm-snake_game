@@ -59,8 +59,11 @@
         }
 
         initializeCanvas(ctx);
-        drawGrid(ctx);
-        drawSnake(ctx);
+        setInterval(() => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid(ctx);
+            drawSnake(ctx);
+        }, 100);
     });
 </script>
 
