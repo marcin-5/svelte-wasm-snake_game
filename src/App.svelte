@@ -39,6 +39,16 @@
         ctx.stroke();
     }
 
+    function drawSnake(ctx: CanvasRenderingContext2D) {
+        const snakeHeadIdx = world.snake_head_idx();
+        const col = snakeHeadIdx % world.width();
+        const row = Math.floor(snakeHeadIdx / world.width());
+
+        ctx.beginPath();
+        ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        ctx.stroke();
+    }
+
     onMount(() => {
         world = World.new(WORLD_SIZE);
 
@@ -50,6 +60,7 @@
 
         initializeCanvas(ctx);
         drawGrid(ctx);
+        drawSnake(ctx);
     });
 </script>
 
