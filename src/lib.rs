@@ -4,9 +4,23 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+struct SnakeCell(usize);
+struct Snake {
+    body: Vec<SnakeCell>,
+}
+
+impl Snake {
+    fn new(spawn_index: usize) -> Snake {
+        Snake {
+            body: vec![SnakeCell(spawn_index)],
+        }
+    }
+}
+
 #[wasm_bindgen]
 pub struct World {
     size: usize,
+    snake: Snake,
 }
 
 #[wasm_bindgen]
@@ -22,7 +36,7 @@ impl World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
 
-        World { size }
+        World { size, snake: Snake::new(size / 2) }
     }
 
     pub fn width(&self) -> usize {
@@ -31,5 +45,9 @@ impl World {
 
     pub fn height(&self) -> usize {
         self.size
+    }
+
+    pub fn snake_head_idx(&self) -> usize {
+        self.snake.body[0].0
     }
 }
