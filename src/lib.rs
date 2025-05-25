@@ -69,6 +69,10 @@ impl World {
         row * self.size + col
     }
 
+    fn set_snake_head(&mut self, idx: usize) {
+        self.snake.body[0].0 = idx;
+    }
+
     pub fn update(&mut self) {
         let snake_idx = self.snake_head_idx();
         let (row, col) = self.index_to_cell(snake_idx);
@@ -92,6 +96,6 @@ impl World {
             }
         };
 
-        self.snake.body[0].0 = next_position;
+        self.set_snake_head(next_position);
     }
 }
