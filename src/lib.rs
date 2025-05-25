@@ -67,21 +67,25 @@ impl World {
         let row = snake_idx / self.size;
         let col = snake_idx % self.size;
 
-        if self.snake.direction == Direction::Up {
-            let next_row = (row - 1) % self.size;
-            self.snake.body[0].0 = next_row * self.size + col;
-        }
-        if self.snake.direction == Direction::Down {
-            let next_row = (row + 1) % self.size;
-            self.snake.body[0].0 = next_row * self.size + col;
-        }
-        if self.snake.direction == Direction::Left {
-            let next_col = (col - 1) % self.size;
-            self.snake.body[0].0 = row * self.size + next_col;
-        }
-        if self.snake.direction == Direction::Right {
-            let next_col = (col + 1) % self.size;
-            self.snake.body[0].0 = row * self.size + next_col;
-        }
+        let next_position = match self.snake.direction {
+            Direction::Up => {
+                let next_row = (row + self.size - 1) % self.size;
+                next_row * self.size + col
+            }
+            Direction::Down => {
+                let next_row = (row + 1) % self.size;
+                next_row * self.size + col
+            }
+            Direction::Left => {
+                let next_col = (col + self.size - 1) % self.size;
+                row * self.size + next_col
+            }
+            Direction::Right => {
+                let next_col = (col + 1) % self.size;
+                row * self.size + next_col
+            }
+        };
+
+        self.snake.body[0].0 = next_position;
     }
 }
