@@ -49,6 +49,20 @@
         ctx.stroke();
     }
 
+    function paint(ctx: CanvasRenderingContext2D) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawGrid(ctx);
+        drawSnake(ctx);
+    }
+
+    function update(ctx: CanvasRenderingContext2D) {
+        setTimeout(() => {
+            world.update();
+            paint(ctx);
+            requestAnimationFrame(() => update(ctx));
+        }, 100);
+    }
+
     onMount(() => {
         world = World.new(WORLD_SIZE);
 
@@ -59,12 +73,7 @@
         }
 
         initializeCanvas(ctx);
-        setInterval(() => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawGrid(ctx);
-            drawSnake(ctx);
-            world.update();
-        }, 100);
+        update(ctx);
     });
 </script>
 
