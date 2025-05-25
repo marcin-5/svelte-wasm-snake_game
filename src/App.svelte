@@ -5,7 +5,6 @@
     const CELL_SIZE = 20;
     const GRID_COLOR = '#122334';
     const WORLD_SIZE = 8;
-    const SNAKE_SPAWN_IDX = 2;
 
     let world: World;
     let canvas: HTMLCanvasElement;
@@ -65,7 +64,7 @@
     }
 
     onMount(() => {
-        world = World.new(WORLD_SIZE, SNAKE_SPAWN_IDX);
+        world = World.new(WORLD_SIZE, Date.now() % (WORLD_SIZE * WORLD_SIZE));
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
