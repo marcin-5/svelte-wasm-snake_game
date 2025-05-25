@@ -33,11 +33,11 @@ impl World {
     ///
     /// # Returns
     /// A new World instance with the specified size
-    pub fn new(grid_size: usize) -> World {
+    pub fn new(grid_size: usize, snake_idx: usize) -> World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
 
-        World { size, grid_capacity: size * size, snake: Snake::new(size / 2) }
+        World { size, grid_capacity: size * size, snake: Snake::new(snake_idx) }
     }
 
     pub fn width(&self) -> usize {
