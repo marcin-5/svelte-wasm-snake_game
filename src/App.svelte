@@ -63,6 +63,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawGrid(ctx);
             drawSnake(ctx);
+            world.update();
         }, 100);
     });
 </script>
