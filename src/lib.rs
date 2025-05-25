@@ -30,7 +30,6 @@ impl Snake {
 #[wasm_bindgen]
 pub struct World {
     size: usize,
-    grid_capacity: usize,
     snake: Snake,
 }
 
@@ -47,7 +46,7 @@ impl World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
 
-        World { size, grid_capacity: size * size, snake: Snake::new(snake_idx) }
+        World { size, snake: Snake::new(snake_idx) }
     }
 
     pub fn width(&self) -> usize {
