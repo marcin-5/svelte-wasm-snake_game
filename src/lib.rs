@@ -20,9 +20,15 @@ struct Snake {
 }
 
 impl Snake {
-    fn new(spawn_index: usize) -> Snake {
+    fn new(spawn_index: usize, length: usize) -> Snake {
+        let mut body = vec!();
+
+        for i in 0..length {
+            body.push(SnakeCell(spawn_index - i));
+        }
+
         Snake {
-            body: vec![SnakeCell(spawn_index)],
+            body,
             direction: Direction::Down,
         }
     }
@@ -47,7 +53,7 @@ impl World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
 
-        World { size, snake: Snake::new(snake_idx) }
+        World { size, snake: Snake::new(snake_idx, 3) }
     }
 
     pub fn width(&self) -> usize {
