@@ -172,8 +172,12 @@ impl World {
         }
 
         if self.snake_head_idx() == self.reward_cell {
+            if self.snake.body.len() < self.grid_capacity {
+                self.reward_cell = World::generate_reward_cell(self.grid_capacity, &self.snake.body);
+            } else {
+                self.reward_cell = usize::MAX;
+            }
             self.snake.body.push(SnakeCell(self.snake.body[1].0));
-            self.reward_cell = World::generate_reward_cell(self.grid_capacity, &self.snake.body);
         }
     }
 }
