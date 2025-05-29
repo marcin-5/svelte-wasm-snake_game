@@ -18,6 +18,13 @@ pub enum Direction {
     Right,
 }
 
+#[wasm_bindgen]
+pub enum GameStatus {
+    Running,
+    Won,
+    Lost,
+}
+
 #[derive(Clone, Copy, PartialEq)]
 struct SnakeCell(usize);
 
@@ -48,6 +55,7 @@ pub struct World {
     snake: Snake,
     next_cell: Option<SnakeCell>,
     reward_cell: usize,
+    state: Option<GameStatus>,
 }
 
 #[wasm_bindgen]
@@ -74,6 +82,7 @@ impl World {
             reward_cell: World::generate_reward_cell(grid_capacity, &snake.body),
             snake,
             next_cell: None,
+            state: None,
         }
     }
 
@@ -155,6 +164,15 @@ impl World {
     }
 
     pub fn step(&mut self) {
+        match self.state {
+            Some(GameStatus::Running) => {
+                self.update();
+            }
+            _ => {}
+        }
+    }
+
+    fn update(&mut self) {
         let temp = self.snake.body.clone();
         match self.next_cell {
             Some(cell) => {
