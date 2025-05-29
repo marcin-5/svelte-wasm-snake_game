@@ -8,7 +8,7 @@
     const WORLD_SIZE = 8;
     const FPS = 10;
 
-    let world: World;
+    let world = $state<World | null>(null);
     let canvas: HTMLCanvasElement;
     let gameControlBtn: HTMLButtonElement;
     let gameStatus = $state<string | null>(null);
@@ -16,6 +16,8 @@
 
 
     function initializeCanvas(ctx: CanvasRenderingContext2D) {
+        if (!world) return;
+
         const width = CELL_SIZE * world.width();
         const height = CELL_SIZE * world.height();
 
@@ -27,6 +29,8 @@
     }
 
     function drawGrid(ctx: CanvasRenderingContext2D) {
+        if (!world) return;
+
         ctx.beginPath();
         ctx.strokeStyle = GRID_COLOR;
 
@@ -46,6 +50,8 @@
     }
 
     function drawRewardCell(ctx: CanvasRenderingContext2D) {
+        if (!world) return;
+
         const rewardCellIdx = world.reward_cell();
         const col = rewardCellIdx % world.width();
         const row = Math.floor(rewardCellIdx / world.height());
@@ -56,10 +62,12 @@
     }
 
     function drawSnake(ctx: CanvasRenderingContext2D) {
+        if (!world) return;
+
         const snakeCells = world.snake_cells();
         snakeCells.forEach((cellIdx, i) => {
-            const col = cellIdx % world.width();
-            const row = Math.floor(cellIdx / world.height());
+            const col = cellIdx % world!.width();
+            const row = Math.floor(cellIdx / world!.height());
 
             ctx.fillStyle = i === 0 ? '#db7878' : '#000000';
             ctx.beginPath();
@@ -78,6 +86,8 @@
 
     function play(ctx: CanvasRenderingContext2D) {
         setTimeout(() => {
+            if (!world) return;
+
             world.step();
             paint(ctx);
             gameStatus = world.game_status_text();
@@ -88,11 +98,15 @@
     onMount(() => {
         document.addEventListener('keydown', (event) => {
             if (event.code.startsWith('Arrow')) {
+                if (!world) return;
                 world.set_snake_direction(Direction[event.code.replace('Arrow', '') as keyof typeof Direction]);
             }
         })
-        gameControlBtn.addEventListener('click', () => world.start_game());
         world = World.new(WORLD_SIZE, random(WORLD_SIZE * WORLD_SIZE));
+        gameControlBtn.addEventListener('click', () => {
+            if (!world) return;
+            world.start_game()
+        });
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
