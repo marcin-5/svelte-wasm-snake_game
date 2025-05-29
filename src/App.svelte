@@ -11,6 +11,9 @@
     let world: World;
     let canvas: HTMLCanvasElement;
     let gameControlBtn: HTMLButtonElement;
+    let gameStatus = $state<string | null>(null);
+    let gameStatusText = $derived(gameStatus ? gameStatus.toString() : 'None');
+
 
     function initializeCanvas(ctx: CanvasRenderingContext2D) {
         const width = CELL_SIZE * world.width();
@@ -77,6 +80,7 @@
         setTimeout(() => {
             world.step();
             paint(ctx);
+            gameStatus = world.game_status_text();
             requestAnimationFrame(() => play(ctx));
         }, 1000 / FPS);
     }
@@ -109,7 +113,7 @@
                     Status:
                 </div>
                 <div id="game-status">
-                    None
+                    {gameStatusText}
                 </div>
             </div>
             <div class="flex justify-center mt-5">

@@ -111,6 +111,15 @@ impl World {
 
     pub fn game_status(&self) -> Option<GameStatus> { self.state }
 
+    pub fn game_status_text(&self) -> String {
+        match self.state {
+            Some(GameStatus::Running) => "Running".to_string(),
+            Some(GameStatus::Won) => "You won!".to_string(),
+            Some(GameStatus::Lost) => "You lost!".to_string(),
+            None => "Not started".to_string(),
+        }
+    }
+
     pub fn reward_cell(&self) -> usize {
         self.reward_cell
     }
