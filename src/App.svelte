@@ -5,8 +5,8 @@
 
     const CELL_SIZE = 20;
     const GRID_COLOR = '#122334';
-    const WORLD_SIZE = 8;
-    const FPS = 10;
+    const WORLD_SIZE = 3;
+    const FPS = 5;
 
     let world = $state<World | null>(null);
     let canvas: HTMLCanvasElement;

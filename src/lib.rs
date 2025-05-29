@@ -210,6 +210,7 @@ impl World {
                 self.reward_cell = World::generate_reward_cell(self.grid_capacity, &self.snake.body);
             } else {
                 self.reward_cell = usize::MAX;
+                self.state = Some(GameStatus::Won);
             }
             self.snake.body.push(SnakeCell(self.snake.body[1].0));
         }
