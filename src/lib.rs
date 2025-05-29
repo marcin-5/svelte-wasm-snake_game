@@ -83,6 +83,10 @@ impl World {
     pub fn set_snake_direction(&mut self, direction: Direction) {
         self.snake.direction = direction;
     }
+    
+    pub fn snake_cells(&self) -> Vec<usize> {
+        self.snake.body.iter().map(|cell| cell.0).collect()
+    }
 
     pub fn update(&mut self) {
         let snake_idx = self.snake_head_idx();
