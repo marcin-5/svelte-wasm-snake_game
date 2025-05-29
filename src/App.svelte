@@ -6,6 +6,7 @@
     const CELL_SIZE = 20;
     const GRID_COLOR = '#122334';
     const WORLD_SIZE = 8;
+    const FPS = 10;
 
     let world: World;
     let canvas: HTMLCanvasElement;
@@ -76,7 +77,7 @@
             world.step();
             paint(ctx);
             requestAnimationFrame(() => update(ctx));
-        }, 100);
+        }, 1000 / FPS);
     }
 
     onMount(() => {
