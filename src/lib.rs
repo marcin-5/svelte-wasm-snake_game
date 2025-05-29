@@ -18,7 +18,7 @@ pub enum Direction {
     Right,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 struct SnakeCell(usize);
 
 struct Snake {
@@ -66,12 +66,18 @@ impl World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
         let grid_capacity = size * size;
-        let reward_cell = random(grid_capacity);
+        let snake = Snake::new(snake_idx, 3);
+        let mut reward_cell;
+
+        loop {
+            reward_cell = random(grid_capacity);
+            if !snake.body.contains(&SnakeCell(reward_cell)) { break; }
+        }
 
         World {
             size,
             grid_capacity,
-            snake: Snake::new(snake_idx, 3),
+            snake,
             next_cell: None,
             reward_cell,
         }
