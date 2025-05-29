@@ -19,6 +19,7 @@ pub enum Direction {
 }
 
 #[wasm_bindgen]
+#[derive(Clone, Copy)]
 pub enum GameStatus {
     Running,
     Won,
@@ -107,6 +108,8 @@ impl World {
     pub fn start_game(&mut self) {
         self.state = Some(GameStatus::Running);
     }
+
+    pub fn game_status(&self) -> Option<GameStatus> { self.state }
 
     pub fn reward_cell(&self) -> usize {
         self.reward_cell
