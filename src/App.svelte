@@ -65,14 +65,15 @@
         if (!world) return;
 
         const snakeCells = world.snake_cells();
-        snakeCells.forEach((cellIdx, i) => {
+        for (let i = snakeCells.length - 1; i >= 0; i--) {
+            const cellIdx = snakeCells[i];
             const col = cellIdx % world!.width();
             const row = Math.floor(cellIdx / world!.height());
 
             ctx.fillStyle = i === 0 ? '#db7878' : '#000000';
             ctx.beginPath();
             ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-        })
+        }
 
         ctx.stroke();
     }

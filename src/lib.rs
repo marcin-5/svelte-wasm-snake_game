@@ -205,6 +205,11 @@ impl World {
             self.snake.body[i] = SnakeCell(temp[i - 1].0);
         }
 
+        if self.snake.body[1..].contains(&self.snake.body[0]) {
+            self.state = Some(GameStatus::Lost);
+            return;
+        }
+
         if self.snake_head_idx() == self.reward_cell {
             if self.snake.body.len() < self.grid_capacity {
                 self.reward_cell = World::generate_reward_cell(self.grid_capacity, &self.snake.body);
