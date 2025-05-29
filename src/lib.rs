@@ -104,6 +104,10 @@ impl World {
         self.size
     }
 
+    pub fn start_game(&mut self) {
+        self.state = Some(GameStatus::Running);
+    }
+
     pub fn reward_cell(&self) -> usize {
         self.reward_cell
     }

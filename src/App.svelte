@@ -10,6 +10,7 @@
 
     let world: World;
     let canvas: HTMLCanvasElement;
+    let gameControlBtn: HTMLButtonElement;
 
     function initializeCanvas(ctx: CanvasRenderingContext2D) {
         const width = CELL_SIZE * world.width();
@@ -72,11 +73,11 @@
         drawRewardCell(ctx);
     }
 
-    function update(ctx: CanvasRenderingContext2D) {
+    function play(ctx: CanvasRenderingContext2D) {
         setTimeout(() => {
             world.step();
             paint(ctx);
-            requestAnimationFrame(() => update(ctx));
+            requestAnimationFrame(() => play(ctx));
         }, 1000 / FPS);
     }
 
@@ -86,6 +87,7 @@
                 world.set_snake_direction(Direction[event.code.replace('Arrow', '') as keyof typeof Direction]);
             }
         })
+        gameControlBtn.addEventListener('click', () => world.start_game());
         world = World.new(WORLD_SIZE, random(WORLD_SIZE * WORLD_SIZE));
 
         const ctx = canvas.getContext('2d');
@@ -95,7 +97,7 @@
         }
 
         initializeCanvas(ctx);
-        update(ctx);
+        play(ctx);
     });
 </script>
 
@@ -111,7 +113,8 @@
                 </div>
             </div>
             <div class="flex justify-center mt-5">
-                <button class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-800 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+                <button bind:this={gameControlBtn}
+                        class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-800 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
                         id="game-control-btn">
                     Play
                 </button>
