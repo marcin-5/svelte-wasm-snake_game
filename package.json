@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run build:wasm && vite build",
-    "build:wasm": "cd wasm-snake && wasm-pack build --target web --out-dir ../src/pkg",
+    "build:wasm": "wasm-pack build --target web --out-dir ../src/pkg",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.ts,.svelte --fix",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
