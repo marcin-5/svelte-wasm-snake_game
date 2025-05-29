@@ -89,6 +89,14 @@ impl World {
         }
     }
 
+    pub fn reset_game(&mut self, snake_idx: usize) {
+        self.snake = Snake::new(snake_idx, 3);
+        self.reward_cell = World::generate_reward_cell(self.grid_capacity, &self.snake.body);
+        self.state = None;
+        self.points = 0;
+        self.next_cell = None;
+    }
+
     fn generate_reward_cell(max: usize, snake_body: &Vec<SnakeCell>) -> Option<usize> {
         let mut reward_cell;
 
