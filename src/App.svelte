@@ -1,6 +1,7 @@
 <script lang="ts">
     import {onMount} from 'svelte';
     import {Direction, World} from '../pkg';
+    import {random} from "./utils/random";
 
     const CELL_SIZE = 20;
     const GRID_COLOR = '#122334';
@@ -84,7 +85,7 @@
                 world.set_snake_direction(Direction[event.code.replace('Arrow', '') as keyof typeof Direction]);
             }
         })
-        world = World.new(WORLD_SIZE, Date.now() % (WORLD_SIZE * WORLD_SIZE));
+        world = World.new(WORLD_SIZE, random(WORLD_SIZE * WORLD_SIZE));
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
