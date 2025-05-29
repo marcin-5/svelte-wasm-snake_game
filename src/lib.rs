@@ -42,6 +42,7 @@ pub struct World {
     grid_capacity: usize,
     snake: Snake,
     next_cell: Option<SnakeCell>,
+    reward_cell: usize,
 }
 
 #[wasm_bindgen]
@@ -60,7 +61,13 @@ impl World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
 
-        World { size, grid_capacity: size * size, snake: Snake::new(snake_idx, 3), next_cell: None }
+        World {
+            size,
+            grid_capacity: size * size,
+            snake: Snake::new(snake_idx, 3),
+            next_cell: None,
+            reward_cell: 10,
+        }
     }
 
     pub fn width(&self) -> usize {
@@ -69,6 +76,10 @@ impl World {
 
     pub fn height(&self) -> usize {
         self.size
+    }
+
+    pub fn reward_cell(&self) -> usize {
+        self.reward_cell
     }
 
     pub fn snake_head_idx(&self) -> usize {
