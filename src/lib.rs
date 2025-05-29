@@ -67,20 +67,24 @@ impl World {
         let size = if grid_size < 2 { 2 } else { grid_size };
         let grid_capacity = size * size;
         let snake = Snake::new(snake_idx, 3);
-        let mut reward_cell;
-
-        loop {
-            reward_cell = random(grid_capacity);
-            if !snake.body.contains(&SnakeCell(reward_cell)) { break; }
-        }
 
         World {
             size,
             grid_capacity,
+            reward_cell: World::generate_reward_cell(grid_capacity, &snake.body),
             snake,
             next_cell: None,
-            reward_cell,
         }
+    }
+
+    fn generate_reward_cell(max: usize, snake_body: &Vec<SnakeCell>) -> usize {
+        let mut reward_cell;
+
+        loop {
+            reward_cell = random(max);
+            if !snake_body.contains(&SnakeCell(reward_cell)) { break; }
+        }
+        reward_cell
     }
 
     pub fn width(&self) -> usize {
@@ -169,6 +173,7 @@ impl World {
 
         if self.snake_head_idx() == self.reward_cell {
             self.snake.body.push(SnakeCell(self.snake.body[1].0));
+            self.reward_cell = World::generate_reward_cell(self.grid_capacity, &self.snake.body);
         }
     }
 }
