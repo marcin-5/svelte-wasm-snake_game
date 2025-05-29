@@ -4,6 +4,11 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+#[wasm_bindgen(module = "/src/utils/date.js")]
+extern {
+    fn now() -> usize;
+}
+
 #[wasm_bindgen]
 #[derive(PartialEq)]
 pub enum Direction {
@@ -60,13 +65,15 @@ impl World {
     pub fn new(grid_size: usize, snake_idx: usize) -> World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
+        let grid_capacity = size * size;
+        let reward_cell = now() % grid_capacity;
 
         World {
             size,
-            grid_capacity: size * size,
+            grid_capacity,
             snake: Snake::new(snake_idx, 3),
             next_cell: None,
-            reward_cell: 10,
+            reward_cell,
         }
     }
 
