@@ -8,4 +8,10 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.cjs',
   },
+  build: {
+    target: 'esnext',
+  },
+  optimizeDeps: {
+    exclude: ['@wasm/pkg'],
+  },
 });
