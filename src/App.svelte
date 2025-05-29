@@ -101,6 +101,22 @@
 
 <main>
     <div class="top-0 left-0 w-full h-full absolute flex items-center justify-center flex-col">
+        <div class="mb-5">
+            <div class="flex">
+                <div class="font-bold mr-10">
+                    Status:
+                </div>
+                <div id="game-status">
+                    None
+                </div>
+            </div>
+            <div class="flex justify-center mt-5">
+                <button class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-800 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+                        id="game-control-btn">
+                    Play
+                </button>
+            </div>
+        </div>
         <canvas
                 bind:this={canvas}
         ></canvas>
