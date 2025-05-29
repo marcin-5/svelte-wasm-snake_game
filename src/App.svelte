@@ -102,12 +102,13 @@
     function play(ctx: CanvasRenderingContext2D) {
         setTimeout(() => {
             if (!world) return;
-
+            console.log(world.game_status());
             world.step();
             paint(ctx);
             updateGameControlButton(world.game_status());
             gameStatus = world.game_status_text();
             points = world.points();
+            if (world.game_status() === GameStatus.Won || world.game_status() === GameStatus.Lost) return;
             requestAnimationFrame(() => play(ctx));
         }, 1000 / FPS);
     }
@@ -120,20 +121,20 @@
             }
         })
         world = World.new(WORLD_SIZE, random(WORLD_SIZE * WORLD_SIZE));
-        gameControlBtn.addEventListener('click', () => {
-            if (!world) return;
-            if (world.game_status() === GameStatus.Won || world.game_status() === GameStatus.Lost) {
-                world.reset_game(random(WORLD_SIZE * WORLD_SIZE));
-            }
-
-            world.start_game()
-        });
-
         const ctx = canvas.getContext('2d');
         if (!ctx) {
             console.error('Could not get 2D context from canvas');
             return;
         }
+
+        gameControlBtn.addEventListener('click', () => {
+            if (!world) return;
+            if (world.game_status() === GameStatus.Won || world.game_status() === GameStatus.Lost) {
+                world.reset_game(random(WORLD_SIZE * WORLD_SIZE));
+                play(ctx);
+            }
+            world.start_game()
+        });
 
         initializeCanvas(ctx);
         play(ctx);
