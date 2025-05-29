@@ -39,6 +39,16 @@
         ctx.stroke();
     }
 
+    function drawRewardCell(ctx: CanvasRenderingContext2D) {
+        const rewardCellIdx = world.reward_cell();
+        const col = rewardCellIdx % world.width();
+        const row = Math.floor(rewardCellIdx / world.height());
+        ctx.fillStyle = '#78db78';
+        ctx.beginPath();
+        ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        ctx.stroke();
+    }
+
     function drawSnake(ctx: CanvasRenderingContext2D) {
         const snakeCells = world.snake_cells();
         snakeCells.forEach((cellIdx, i) => {
@@ -57,6 +67,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawGrid(ctx);
         drawSnake(ctx);
+        drawRewardCell(ctx);
     }
 
     function update(ctx: CanvasRenderingContext2D) {
