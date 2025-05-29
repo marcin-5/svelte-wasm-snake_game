@@ -37,6 +37,7 @@ impl Snake {
 #[wasm_bindgen]
 pub struct World {
     size: usize,
+    grid_capacity: usize,
     snake: Snake,
 }
 
@@ -53,7 +54,7 @@ impl World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
 
-        World { size, snake: Snake::new(snake_idx, 3) }
+        World { size, grid_capacity: size * size, snake: Snake::new(snake_idx, 3) }
     }
 
     pub fn width(&self) -> usize {
@@ -68,49 +69,55 @@ impl World {
         self.snake.body[0].0
     }
 
-    fn index_to_cell(&self, idx: usize) -> (usize, usize) {
-        (idx / self.size, idx % self.size)
-    }
-
-    fn cell_to_index(&self, row: usize, col: usize) -> usize {
-        row * self.size + col
-    }
-
-    fn set_snake_head(&mut self, idx: usize) {
-        self.snake.body[0].0 = idx;
-    }
-
     pub fn set_snake_direction(&mut self, direction: Direction) {
         self.snake.direction = direction;
     }
-    
+
     pub fn snake_cells(&self) -> Vec<usize> {
         self.snake.body.iter().map(|cell| cell.0).collect()
     }
 
-    pub fn update(&mut self) {
+    fn gen_next_snake_cell(&self) -> SnakeCell {
         let snake_idx = self.snake_head_idx();
-        let (row, col) = self.index_to_cell(snake_idx);
-
-        let next_position = match self.snake.direction {
+        let row = snake_idx / self.size;
+        return match self.snake.direction {
             Direction::Up => {
-                let next_row = (row + self.size - 1) % self.size;
-                self.cell_to_index(next_row, col)
+                let threshold = snake_idx - (row * self.size);
+                if snake_idx == threshold {
+                    SnakeCell((self.grid_capacity - self.size) + threshold)
+                } else {
+                    SnakeCell(snake_idx - self.size)
+                }
             }
             Direction::Down => {
-                let next_row = (row + 1) % self.size;
-                self.cell_to_index(next_row, col)
-            }
-            Direction::Left => {
-                let next_col = (col + self.size - 1) % self.size;
-                self.cell_to_index(row, next_col)
+                let threshold = snake_idx + ((self.size - row) * self.size);
+                if snake_idx + self.size == threshold {
+                    SnakeCell(threshold - ((row + 1) * self.size))
+                } else {
+                    SnakeCell(snake_idx + self.size)
+                }
             }
             Direction::Right => {
-                let next_col = (col + 1) % self.size;
-                self.cell_to_index(row, next_col)
+                let threshold = (row + 1) * self.size;
+                if snake_idx + 1 == threshold {
+                    SnakeCell(threshold - self.size)
+                } else {
+                    SnakeCell(snake_idx + 1)
+                }
+            }
+            Direction::Left => {
+                let threshold = row * self.size;
+                if snake_idx == threshold {
+                    SnakeCell(threshold + (self.size - 1))
+                } else {
+                    SnakeCell(snake_idx - 1)
+                }
             }
         };
+    }
 
-        self.set_snake_head(next_position);
+    pub fn step(&mut self) {
+        let next_cell = self.gen_next_snake_cell();
+        self.snake.body[0] = next_cell;
     }
 }

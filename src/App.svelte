@@ -40,12 +40,16 @@
     }
 
     function drawSnake(ctx: CanvasRenderingContext2D) {
-        const snakeHeadIdx = world.snake_head_idx();
-        const col = snakeHeadIdx % world.width();
-        const row = Math.floor(snakeHeadIdx / world.width());
+        const snakeCells = world.snake_cells();
+        snakeCells.forEach((cellIdx, i) => {
+            const col = cellIdx % world.width();
+            const row = Math.floor(cellIdx / world.height());
 
-        ctx.beginPath();
-        ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            ctx.fillStyle = i === 0 ? '#db7878' : '#000000';
+            ctx.beginPath();
+            ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        })
+
         ctx.stroke();
     }
 
@@ -57,7 +61,7 @@
 
     function update(ctx: CanvasRenderingContext2D) {
         setTimeout(() => {
-            world.update();
+            world.step();
             paint(ctx);
             requestAnimationFrame(() => update(ctx));
         }, 100);
