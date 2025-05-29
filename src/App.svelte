@@ -99,8 +99,6 @@
     });
 </script>
 
-<canvas bind:this={canvas}></canvas>
-
 <main>
     <div class="top-0 left-0 w-full h-full absolute flex items-center justify-center flex-col">
         <canvas
