@@ -102,7 +102,7 @@
     function play(ctx: CanvasRenderingContext2D) {
         setTimeout(() => {
             if (!world) return;
-            console.log(world.game_status());
+
             world.step();
             paint(ctx);
             updateGameControlButton(world.game_status());
