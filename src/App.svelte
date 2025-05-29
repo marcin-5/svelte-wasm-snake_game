@@ -54,8 +54,8 @@
         if (!world) return;
 
         const rewardCellIdx = world.reward_cell();
-        const col = rewardCellIdx % world.width();
-        const row = Math.floor(rewardCellIdx / world.height());
+        const col = rewardCellIdx! % world.width();
+        const row = Math.floor(rewardCellIdx! / world.height());
         ctx.fillStyle = '#78db78';
         ctx.beginPath();
         ctx.fillRect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE);
