@@ -13,6 +13,7 @@
     let gameControlBtn: HTMLButtonElement;
     let gameStatus = $state<string | null>(null);
     let gameStatusText = $derived(gameStatus ? gameStatus.toString() : 'None');
+    let points = $state(0);
 
 
     function initializeCanvas(ctx: CanvasRenderingContext2D) {
@@ -92,6 +93,7 @@
             world.step();
             paint(ctx);
             gameStatus = world.game_status_text();
+            points = world.points();
             requestAnimationFrame(() => play(ctx));
         }, 1000 / FPS);
     }
@@ -122,13 +124,21 @@
 
 <main>
     <div class="top-0 left-0 w-full h-full absolute flex items-center justify-center flex-col">
-        <div class="mb-5">
+        <div class="mb-5 justify-center">
             <div class="flex">
                 <div class="font-bold mr-10">
                     Status:
                 </div>
-                <div id="game-status">
+                <div class="font-medium text-gray-900">
                     {gameStatusText}
+                </div>
+            </div>
+            <div class="flex">
+                <div class="font-bold mr-10">
+                    Points:
+                </div>
+                <div class="font-medium text-gray-900">
+                    {points}
                 </div>
             </div>
             <div class="flex justify-center mt-5">
