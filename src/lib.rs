@@ -48,10 +48,13 @@ impl World {
     /// Creates a new world with the specified grid size
     ///
     /// # Arguments
+    ///
     /// * `grid_size` - The size of the grid (number of cells in each dimension)
+    /// * `snake_idx` - The initial spawn index for the snake
     ///
     /// # Returns
-    /// A new World instance with the specified size
+    ///
+    /// A new World instance with the specified size and snake position
     pub fn new(grid_size: usize, snake_idx: usize) -> World {
         // Ensure minimum size for stability
         let size = if grid_size < 2 { 2 } else { grid_size };
