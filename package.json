@@ -32,7 +32,7 @@
   "scripts": {
     "build": "vite build",
     "build:wasm": "pwd && ls -AlF && wasm-pack build --target web --out-dir pkg",
-    "vercel-build": "npm install wasm-pack && npm run build:wasm && npm run build",
+    "vercel-build": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && npm install wasm-pack && npm run build:wasm && npm run build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.ts,.svelte --fix",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"

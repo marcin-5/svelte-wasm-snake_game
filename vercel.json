@@ -8,7 +8,7 @@
         "distDir": "dist",
         "buildCommand": "npm run vercel-build",
         "environment": {
-          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "PATH": "/usr/local/bin:/usr/bin:/bin:/tmp/.cargo/bin",
           "CARGO_HOME": "/tmp/.cargo",
           "RUSTUP_HOME": "/tmp/.rustup"
         }
