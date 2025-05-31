@@ -6,6 +6,10 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"
+      },
+      "env": {
+        "CARGO_HOME": "/tmp/.cargo",
+        "RUSTUP_HOME": "/tmp/.rustup"
       }
     }
   ],
