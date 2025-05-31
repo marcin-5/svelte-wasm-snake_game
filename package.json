@@ -31,7 +31,7 @@
   "private": true,
   "scripts": {
     "build": "vite build",
-    "build:wasm": "wasm-pack build wasm/ --target web --out-dir ../src/pkg",
+    "build:wasm": "wasm-pack build ./ --target web --out-dir ./pkg",
     "vercel-build": "npm install wasm-pack && npm run build:wasm && npm run build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.ts,.svelte --fix",
