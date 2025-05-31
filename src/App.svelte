@@ -1,6 +1,6 @@
 <script lang="ts">
     import {onMount} from 'svelte';
-    import {Direction, GameStatus, World} from '../pkg';
+    import {Direction, GameStatus, World} from '/pkg/snake_game.js';
     import {random} from "./utils/random";
 
     const CELL_SIZE = 20;

@@ -14,4 +14,9 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['@wasm/pkg'],
   },
+  resolve: {
+    alias: {
+      pkg: '/pkg',
+    },
+  },
 });
