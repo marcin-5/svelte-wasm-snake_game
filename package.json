@@ -30,8 +30,8 @@
   },
   "private": true,
   "scripts": {
-    "build": "vite build",
-    "build:wasm": "pwd && ls -AlF && wasm-pack build --target web --out-dir pkg --no-pack",
+    "build": "pwd && ls -AlF && vite build",
+    "build:wasm": "wasm-pack build --target web --out-dir pkg --no-pack",
     "vercel-build": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env && npm install wasm-pack && npm run build:wasm && npm run build",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.ts,.svelte --fix",
