@@ -37,5 +37,8 @@
     "lint": "eslint . --ext .js,.ts,.svelte --fix",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "wasm-pack": "^0.13.1"
+  }
 }
