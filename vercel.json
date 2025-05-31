@@ -5,11 +5,13 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
-      },
-      "env": {
-        "CARGO_HOME": "/tmp/.cargo",
-        "RUSTUP_HOME": "/tmp/.rustup"
+        "distDir": "dist",
+        "buildCommand": "npm run vercel-build",
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "CARGO_HOME": "/tmp/.cargo",
+          "RUSTUP_HOME": "/tmp/.rustup"
+        }
       }
     }
   ],
