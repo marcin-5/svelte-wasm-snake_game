@@ -16,6 +16,7 @@
     let gameStatus = $state<string | null>(null);
     let gameStatusText = $derived(gameStatus ? gameStatus.toString() : 'None');
     let points = $state(0);
+    let rewardCount = $state(0);
 
     function initializeCanvas(ctx: CanvasRenderingContext2D) {
         if (!world) return;
@@ -108,7 +109,13 @@
             paint(ctx);
             updateGameControlButton(world.game_status());
             gameStatus = world.game_status_text();
-            points = world.points();
+
+            const newRewardCount = world.points();
+            if (newRewardCount > rewardCount) {
+                points += fps;
+                rewardCount = newRewardCount;
+            }
+
             if (world.game_status() === GameStatus.Won || world.game_status() === GameStatus.Lost) return;
             requestAnimationFrame(() => play(ctx));
         }, 1000 / fps);
@@ -116,6 +123,8 @@
 
     function createNewWorld() {
         world = World.new(worldSize, random(worldSize * worldSize));
+        points = 0;
+        rewardCount = 0;
         const ctx = canvas.getContext('2d');
         if (ctx) {
             initializeCanvas(ctx);
@@ -135,7 +144,7 @@
             }
         })
 
-        createNewWorld(); // Use the new function
+        createNewWorld();
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
@@ -146,7 +155,9 @@
         gameControlBtn.addEventListener('click', () => {
             if (!world) return;
             if (world.game_status() === GameStatus.Won || world.game_status() === GameStatus.Lost) {
-                world.reset_game(random(worldSize * worldSize)); // Use reactive worldSize
+                world.reset_game(random(worldSize * worldSize));
+                points = 0;
+                rewardCount = 0;
                 play(ctx);
             }
             world.start_game()
