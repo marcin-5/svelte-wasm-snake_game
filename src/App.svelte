@@ -5,8 +5,10 @@
 
     const CELL_SIZE = 20;
     const GRID_COLOR = '#122334';
-    const WORLD_SIZE = 8;
-    const FPS = 5;
+
+    let worldSize = $state(8);
+    let fps = $state(5);
+    let showSettings = $state(false);
 
     let world = $state<World | null>(null);
     let canvas: HTMLCanvasElement;
@@ -14,7 +16,6 @@
     let gameStatus = $state<string | null>(null);
     let gameStatusText = $derived(gameStatus ? gameStatus.toString() : 'None');
     let points = $state(0);
-
 
     function initializeCanvas(ctx: CanvasRenderingContext2D) {
         if (!world) return;
@@ -110,7 +111,20 @@
             points = world.points();
             if (world.game_status() === GameStatus.Won || world.game_status() === GameStatus.Lost) return;
             requestAnimationFrame(() => play(ctx));
-        }, 1000 / FPS);
+        }, 1000 / fps);
+    }
+
+    function createNewWorld() {
+        world = World.new(worldSize, random(worldSize * worldSize));
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            initializeCanvas(ctx);
+        }
+    }
+
+    function applySettings() {
+        createNewWorld();
+        showSettings = false;
     }
 
     onMount(() => {
@@ -120,7 +134,9 @@
                 world.set_snake_direction(Direction[event.code.replace('Arrow', '') as keyof typeof Direction]);
             }
         })
-        world = World.new(WORLD_SIZE, random(WORLD_SIZE * WORLD_SIZE));
+
+        createNewWorld(); // Use the new function
+
         const ctx = canvas.getContext('2d');
         if (!ctx) {
             console.error('Could not get 2D context from canvas');
@@ -130,13 +146,12 @@
         gameControlBtn.addEventListener('click', () => {
             if (!world) return;
             if (world.game_status() === GameStatus.Won || world.game_status() === GameStatus.Lost) {
-                world.reset_game(random(WORLD_SIZE * WORLD_SIZE));
+                world.reset_game(random(worldSize * worldSize)); // Use reactive worldSize
                 play(ctx);
             }
             world.start_game()
         });
 
-        initializeCanvas(ctx);
         play(ctx);
     });
 </script>
@@ -144,6 +159,66 @@
 <main>
     <div class="top-0 left-0 w-full h-full absolute flex items-center justify-center flex-col">
         <div class="mb-5 justify-center">
+            <!-- Settings Toggle Button -->
+            <div class="flex justify-center mb-3">
+                <button
+                        class="text-gray-700 hover:text-white border border-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
+                        onclick={() => showSettings = !showSettings}>
+                    ⚙️ Settings
+                </button>
+            </div>
+
+            <!-- Settings Panel -->
+            {#if showSettings}
+                <div class="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                    <h3 class="font-bold mb-3 text-center">Game Settings</h3>
+
+                    <div class="flex flex-col gap-3">
+                        <!-- World Size Setting -->
+                        <div class="flex items-center justify-between">
+                            <label for="worldSize" class="font-medium">World Size:</label>
+                            <div class="flex items-center gap-2">
+                                <input
+                                        id="worldSize"
+                                        type="range"
+                                        min="5"
+                                        max="20"
+                                        bind:value={worldSize}
+                                        class="w-20"
+                                />
+                                <span class="w-8 text-center font-mono">{worldSize}</span>
+                            </div>
+                        </div>
+
+                        <!-- FPS Setting -->
+                        <div class="flex items-center justify-between">
+                            <label for="fps" class="font-medium">Speed (FPS):</label>
+                            <div class="flex items-center gap-2">
+                                <input
+                                        id="fps"
+                                        type="range"
+                                        min="1"
+                                        max="15"
+                                        bind:value={fps}
+                                        class="w-20"
+                                />
+                                <span class="w-8 text-center font-mono">{fps}</span>
+                            </div>
+                        </div>
+
+                        <!-- Apply Button -->
+                        <div class="flex justify-center mt-2">
+                            <button
+                                    onclick={applySettings}
+                                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                                Apply Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+
+            <!-- Game Status -->
             <div class="flex">
                 <div class="font-bold mr-10">
                     Status:
