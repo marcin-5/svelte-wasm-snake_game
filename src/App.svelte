@@ -218,23 +218,26 @@
                 </div>
             {/if}
 
-            <!-- Game Status -->
-            <div class="flex">
-                <div class="font-bold mr-10">
-                    Status:
+            <!-- Game Status Panel -->
+            <div class="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                <div class="flex justify-between">
+                    <div class="font-bold mr-10">
+                        Status:
+                    </div>
+                    <div class="font-medium text-gray-900">
+                        {gameStatusText}
+                    </div>
                 </div>
-                <div class="font-medium text-gray-900">
-                    {gameStatusText}
+                <div class="flex justify-between mt-2">
+                    <div class="font-bold mr-10">
+                        Points:
+                    </div>
+                    <div class="font-medium text-gray-900">
+                        {points}
+                    </div>
                 </div>
             </div>
-            <div class="flex">
-                <div class="font-bold mr-10">
-                    Points:
-                </div>
-                <div class="font-medium text-gray-900">
-                    {points}
-                </div>
-            </div>
+
             <div class="flex justify-center mt-5">
                 <button bind:this={gameControlBtn}
                         class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-800 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
