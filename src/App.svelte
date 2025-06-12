@@ -162,7 +162,7 @@
             <!-- Settings Toggle Button -->
             <div class="flex justify-center mb-3">
                 <button
-                        class="text-gray-700 hover:text-white border border-gray-600 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
+                        class="text-slate-700 hover:text-white border border-slate-600 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center"
                         onclick={() => showSettings = !showSettings}>
                     ⚙️ Settings
                 </button>
@@ -170,7 +170,7 @@
 
             <!-- Settings Panel -->
             {#if showSettings}
-                <div class="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                <div class="mb-4 p-4 border border-slate-300 rounded-lg bg-slate-50">
                     <h3 class="font-bold mb-3 text-center">Game Settings</h3>
 
                     <div class="flex flex-col gap-3">
@@ -184,7 +184,7 @@
                                         min="5"
                                         max="20"
                                         bind:value={worldSize}
-                                        class="w-20"
+                                        class="w-20 accent-blue-400"
                                 />
                                 <span class="w-8 text-center font-mono">{worldSize}</span>
                             </div>
@@ -200,7 +200,7 @@
                                         min="1"
                                         max="15"
                                         bind:value={fps}
-                                        class="w-20"
+                                        class="w-20 accent-blue-400"
                                 />
                                 <span class="w-8 text-center font-mono">{fps}</span>
                             </div>
@@ -210,7 +210,7 @@
                         <div class="flex justify-center mt-2">
                             <button
                                     onclick={applySettings}
-                                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+                                    class="text-black bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-600 font-medium rounded-lg text-sm px-4 py-2">
                                 Apply Settings
                             </button>
                         </div>
@@ -219,12 +219,12 @@
             {/if}
 
             <!-- Game Status Panel -->
-            <div class="mb-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
+            <div class="mb-4 p-4 border border-slate-300 rounded-lg bg-slate-50">
                 <div class="flex justify-between">
                     <div class="font-bold mr-10">
                         Status:
                     </div>
-                    <div class="font-medium text-gray-900">
+                    <div class="font-medium text-slate-900">
                         {gameStatusText}
                     </div>
                 </div>
@@ -232,7 +232,7 @@
                     <div class="font-bold mr-10">
                         Points:
                     </div>
-                    <div class="font-medium text-gray-900">
+                    <div class="font-medium text-slate-900">
                         {points}
                     </div>
                 </div>
@@ -240,7 +240,7 @@
 
             <div class="flex justify-center mt-5">
                 <button bind:this={gameControlBtn}
-                        class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-gray-600 dark:text-gray-800 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800">
+                        class="text-slate-700 hover:text-white border border-slate-600 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-300 font-medium rounded-lg text-sm px-3 py-1.5 text-center">
                     Play
                 </button>
             </div>
